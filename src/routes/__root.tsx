@@ -3,6 +3,7 @@ import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scrip
 import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() { return <div className="grid min-h-screen place-items-center bg-background px-4 text-center"><div><h1 className="text-7xl font-extrabold">404</h1><p className="mt-3 text-muted-foreground">This page could not be found.</p><Link to="/" className="mt-6 inline-block font-bold text-primary">Return home</Link></div></div>; }
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) { const router = useRouter(); useEffect(() => { reportLovableError(error, { boundary: "tanstack_root_error_component" }); }, [error]); return <div className="grid min-h-screen place-items-center px-4 text-center"><div><h1 className="text-2xl font-bold">This page didn’t load</h1><button className="mt-5 font-bold text-primary" onClick={() => { router.invalidate(); reset(); }}>Try again</button></div></div>; }
@@ -11,4 +12,4 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   shellComponent: RootShell, component: RootComponent, notFoundComponent: NotFoundComponent, errorComponent: ErrorComponent,
 });
 function RootShell({ children }: { children: ReactNode }) { return <html lang="en"><head><HeadContent /></head><body>{children}<Scripts /></body></html>; }
-function RootComponent() { const { queryClient } = Route.useRouteContext(); return <QueryClientProvider client={queryClient}><Outlet /></QueryClientProvider>; }
+function RootComponent() { const { queryClient } = Route.useRouteContext(); const router = useRouter(); useEffect(() => { const { data } = supabase.auth.onAuthStateChange((event) => { if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return; router.invalidate(); if (event !== "SIGNED_OUT") queryClient.invalidateQueries(); }); return () => data.subscription.unsubscribe(); }, [queryClient, router]); return <QueryClientProvider client={queryClient}><Outlet /></QueryClientProvider>; }
