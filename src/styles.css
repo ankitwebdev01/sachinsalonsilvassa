@@ -25,3 +25,11 @@
 @layer base { * { border-color: var(--color-border); } html { scroll-behavior: smooth; } body { margin: 0; background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); letter-spacing: 0; } button, a { -webkit-tap-highlight-color: transparent; } }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @utility animate-rise { animation: rise .55s ease-out both; }
+
+/* Hide the "Edit with Lovable" badge on deployments */
+#lovable-badge, [id*="lovable-badge"], a[href*="lovable.dev/projects"], a[href*="lovable.dev?utm"], .lovable-badge {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
