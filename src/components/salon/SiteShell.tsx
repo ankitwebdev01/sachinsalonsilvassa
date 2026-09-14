@@ -2,7 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { MapPin, Menu, MessageCircle, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/sachin-salon-logo.png.asset.json";
+import logoSrc from "@/assets/sachin-salon-logo.png";
+const logo = { url: logoSrc };
 import { defaults, whatsappUrl } from "@/lib/salon";
 
 const nav = [["Services", "/services"], ["Products", "/products"], ["Salons", "/salons"], ["Membership", "/membership"]] as const;

@@ -4,10 +4,14 @@ import { Button } from "@/components/ui/button";
 import { SectionTitle, SiteShell } from "@/components/salon/SiteShell";
 import { useSalonContent } from "@/components/salon/Content";
 import { whatsappUrl } from "@/lib/salon";
-import fade from "@/assets/mens-haircut-fade.jpg.asset.json";
-import styling from "@/assets/mens-hair-styling.jpg.asset.json";
-import women from "@/assets/womens-hair-styling.jpg.asset.json";
-import interior from "@/assets/salon-interior.avif.asset.json";
+import fadeSrc from "@/assets/mens-haircut-fade.jpg";
+const fade = { url: fadeSrc };
+import stylingSrc from "@/assets/mens-hair-styling.jpg";
+const styling = { url: stylingSrc };
+import womenSrc from "@/assets/womens-hair-styling.jpg";
+const women = { url: womenSrc };
+import interiorSrc from "@/assets/salon-interior.avif";
+const interior = { url: interiorSrc };
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [{ title: "Best Unisex Salon in Silvassa | Sachin Salon" }, { name: "description", content: "Sachin Unisex Salon offers haircuts, styling, colour, spa and grooming in Silvassa. Rated 5.0 across 345 Google reviews." }, { property: "og:title", content: "Sachin Unisex Salon — Silvassa" }, { property: "og:description", content: "Professional hair and beauty care for women and men in Silvassa." }, { property: "og:url", content: "/" }], links: [{ rel: "canonical", href: "/" }], scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "HairSalon", name: "Sachin Unisex Salon", telephone: "+919173414508", address: { "@type": "PostalAddress", addressLocality: "Silvassa", postalCode: "396230", addressRegion: "Dadra and Nagar Haveli and Daman and Diu", addressCountry: "IN" }, aggregateRating: { "@type": "AggregateRating", ratingValue: "5", reviewCount: "345" } }) }] }), component: HomePage,
