@@ -6,7 +6,7 @@ import logoSrc from "@/assets/sachin-salon-logo.png";
 const logo = { url: logoSrc };
 import { defaults, whatsappUrl } from "@/lib/salon";
 
-const nav = [["Services", "/services"], ["Products", "/products"], ["Salons", "/salons"], ["Membership", "/membership"]] as const;
+const nav = [["Services", "/services"], ["Products", "/products"], ["Salons", "/salons"], ["Gallery", "/gallery"], ["Membership", "/membership"]] as const;
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
