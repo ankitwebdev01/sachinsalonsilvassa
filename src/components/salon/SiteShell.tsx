@@ -6,7 +6,7 @@ import logoSrc from "@/assets/sachin-salon-logo.png";
 const logo = { url: logoSrc };
 import { defaults, whatsappUrl } from "@/lib/salon";
 
-const nav = [["Services", "/services"], ["Products", "/products"], ["Salons", "/salons"], ["Gallery", "/gallery"], ["Membership", "/membership"]] as const;
+const nav = [["Services", "/services"], ["Products", "/products"], ["Salons", "/salons"], ["Gallery", "/gallery"], ["Membership", "/membership"], ["Academy", "/academy"]] as const;
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <main>{children}</main>
     <footer className="border-t border-border bg-ink text-ink-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
-        <div><img src={logo.url} alt="" className="mb-4 h-16 w-16 rounded-full object-cover brightness-0 invert" /><p className="max-w-xs text-sm text-ink-muted">Professional hair, beauty and grooming care for women and men in Silvassa.</p></div>
+        <div><span className="mb-4 inline-grid rounded-full bg-background p-2"><img src={logo.url} alt="Sachin Unisex Salon logo" className="h-14 w-14 rounded-full object-contain" /></span><p className="max-w-xs text-sm text-ink-muted">Professional hair, beauty and grooming care for women, men and families in Silvassa.</p></div>
         <div><h2 className="mb-4 text-sm font-bold uppercase">Visit us</h2><p className="text-sm text-ink-muted">{defaults.business.address}</p><p className="mt-2 text-sm text-ink-muted">{defaults.business.hours}</p></div>
         <div><h2 className="mb-4 text-sm font-bold uppercase">Contact</h2><a className="text-xl font-bold" href={whatsappUrl()} target="_blank" rel="noreferrer">{defaults.business.displayPhone}</a><p className="mt-3 text-xs text-ink-muted">Tap the number to chat with us on WhatsApp.</p><Link to="/auth" className="mt-6 inline-block text-xs text-ink-muted hover:text-ink-foreground">Owner login</Link></div>
       </div>

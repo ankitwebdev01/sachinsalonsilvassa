@@ -42,6 +42,7 @@ export const defaults: ContentMap = {
   offers: [
     { title: "First Visit Welcome", text: "Discover personalised salon care in Silvassa with a smooth first appointment experience.", cta: "Book on WhatsApp" },
     { title: "Complete Hair Ritual", text: "Haircut, wash, nourishing care and styling tailored for your best hair day.", cta: "Enquire now" },
+    { title: "Family Salon Day", text: "Easy hair and grooming appointments for parents and children together.", cta: "Plan your visit" },
   ],
   reviews: [
     { quote: "Best experience and brilliant staff good service 😊", author: "Google review" },
