@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, BadgeCheck, CalendarCheck, Phone, Scissors, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { SectionTitle, SiteShell } from "@/components/salon/SiteShell";
 import { useSalonContent } from "@/components/salon/Content";
@@ -9,19 +9,26 @@ import fadeSrc from "@/assets/mens-haircut-fade.jpg";
 import stylingSrc from "@/assets/mens-hair-styling.jpg";
 import womenSrc from "@/assets/womens-hair-styling.jpg";
 import interiorSrc from "@/assets/salon-interior.avif";
+import firstVisitSrc from "@/assets/offer-first-visit.jpg";
+import hairRitualSrc from "@/assets/offer-hair-ritual.jpg";
+import familyOfferSrc from "@/assets/offer-family.jpg";
+import type { Offer } from "@/lib/salon";
 
 const fade = { url: fadeSrc };
 const styling = { url: stylingSrc };
 const women = { url: womenSrc };
 const interior = { url: interiorSrc };
 const photos = [women, fade, styling, interior];
+const offerPhotos = [firstVisitSrc, hairRitualSrc, familyOfferSrc];
 const fallbackPhoto = interior;
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [{ title: "Best Unisex Hair Salon in Silvassa, Gujarat | Sachin Salon" }, { name: "description", content: "Sachin Unisex Salon offers haircuts, styling, colour, spa and grooming in Silvassa. Rated 5.0 across 345 Google reviews." }, { property: "og:title", content: "Best Unisex Hair Salon in Silvassa, Gujarat" }, { property: "og:description", content: "Professional hair and beauty care for women, men and families in Silvassa." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { property: "og:url", content: "/" }], links: [{ rel: "canonical", href: "/" }], scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "HairSalon", name: "Sachin Unisex Salon", telephone: "+919173414508", address: { "@type": "PostalAddress", addressLocality: "Silvassa", postalCode: "396230", addressRegion: "Dadra and Nagar Haveli and Daman and Diu", addressCountry: "IN" }, aggregateRating: { "@type": "AggregateRating", ratingValue: "5", reviewCount: "345" } }) }] }), component: HomePage,
 });
 
-function HomePage() { const c = useSalonContent(); const sliderRef = useRef<HTMLDivElement>(null); const slide = (direction: -1 | 1) => { const node = sliderRef.current; if (!node) return; node.scrollBy({ left: direction * node.clientWidth, behavior: "smooth" }); }; return <SiteShell>
+function OfferSlider({ offers, offset = 0 }: { offers: Offer[]; offset?: number }) { const sliderRef = useRef<HTMLDivElement>(null); const current = useRef(offset); const moveTo = (next: number) => { const node = sliderRef.current; if (!node || offers.length === 0) return; current.current = (next + offers.length) % offers.length; node.scrollTo({ left: current.current * node.clientWidth, behavior: "smooth" }); }; useEffect(() => { const timer = window.setInterval(() => moveTo(current.current + 1), 4200); return () => window.clearInterval(timer); }, [offers.length]); return <div className="relative"><div ref={sliderRef} className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto scroll-smooth rounded-lg" aria-label="Salon offers slider">{offers.map((offer, i) => <article key={`${offer.title}-${i}`} className="relative min-h-48 w-full shrink-0 snap-center overflow-hidden rounded-lg bg-ink text-ink-foreground shadow-xl"><img src={offerPhotos[i%offerPhotos.length]} alt={`${offer.title} at Sachin Unisex Salon`} width={1200} height={608} className="absolute inset-0 h-full w-full object-cover opacity-60" /><div className="absolute inset-0 bg-linear-to-r from-ink via-ink/75 to-transparent" /><div className="relative flex min-h-48 max-w-sm flex-col justify-center p-6"><p className="mb-2 text-[11px] font-bold uppercase text-primary">Sachin Salon Offer</p><h2 className="text-2xl font-extrabold">{offer.title}</h2><p className="mt-2 line-clamp-2 text-xs leading-5 text-ink-muted">{offer.text}</p><Button asChild size="sm" className="mt-4 w-fit"><a href={whatsappUrl()} target="_blank" rel="noreferrer">{offer.cta}<ArrowRight /></a></Button></div></article>)}</div><div className="absolute bottom-3 right-3 flex gap-1"><Button type="button" size="icon" variant="secondary" className="h-8 w-8" onClick={() => moveTo(current.current-1)} aria-label="Previous offer"><ArrowLeft /></Button><Button type="button" size="icon" className="h-8 w-8" onClick={() => moveTo(current.current+1)} aria-label="Next offer"><ArrowRight /></Button></div></div> }
+
+function HomePage() { const c = useSalonContent(); return <SiteShell>
   <section className="bg-warm">
     <div className="mx-auto grid max-w-6xl gap-8 px-4 pb-10 pt-8 sm:px-6 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
       <div className="animate-rise">
@@ -41,12 +48,7 @@ function HomePage() { const c = useSalonContent(); const sliderRef = useRef<HTML
           {[["345+", "Happy clients", BadgeCheck], ["Family", "Salon", ShieldCheck], ["Premium", "Quality", Sparkles], ["Daily", "Support", CalendarCheck]].map(([value, label, Icon]) => <div key={String(label)} className="px-2"><Icon className="mx-auto mb-2 h-5 w-5 text-primary" /><p className="text-sm font-extrabold">{value}</p><p className="text-[11px] text-muted-foreground">{label}</p></div>)}
         </div>
       </div>
-      <div className="relative">
-        <div ref={sliderRef} className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth rounded-lg" aria-label="Salon offers slider">
-          {c.offers.slice(0, 2).map((offer, i) => { const photo = photos[i] ?? fallbackPhoto; return <article key={offer.title} className="relative min-h-72 w-full shrink-0 snap-center overflow-hidden rounded-lg bg-ink text-ink-foreground shadow-xl sm:min-h-80"><img src={photo.url} alt={`${offer.title} at Sachin Unisex Salon`} className="absolute inset-0 h-full w-full object-cover opacity-60" /><div className="absolute inset-0 bg-linear-to-r from-ink via-ink/70 to-transparent" /><div className="relative flex min-h-72 max-w-md flex-col justify-center p-7 sm:min-h-80 sm:p-9"><p className="mb-3 text-xs font-bold uppercase text-primary">Sachin Salon Offer</p><h2 className="text-4xl font-extrabold">{offer.title}</h2><p className="mt-3 max-w-xs text-sm leading-6 text-ink-muted">{offer.text}</p><Button asChild className="mt-6 w-fit"><a href={whatsappUrl()} target="_blank" rel="noreferrer">{offer.cta}<ArrowRight /></a></Button></div></article>; })}
-        </div>
-        <div className="absolute bottom-4 right-4 flex gap-2"><Button type="button" size="icon" variant="secondary" onClick={() => slide(-1)} aria-label="Previous offer"><ArrowLeft /></Button><Button type="button" size="icon" onClick={() => slide(1)} aria-label="Next offer"><ArrowRight /></Button></div>
-      </div>
+      <div className="grid gap-4"><OfferSlider offers={c.offers} /><OfferSlider offers={c.offers} offset={1} /></div>
     </div>
     <div className="mx-auto grid max-w-6xl gap-3 px-4 pb-8 sm:px-6 md:grid-cols-4">{[[Truck, "Easy booking", "Message us on WhatsApp"], [ShieldCheck, "Safe service", "Clean tools and care"], [BadgeCheck, "Top rated", "5/5 by customers"], [Sparkles, "Premium finish", "Salon-ready styling"]].map(([Icon, title, text]) => <div key={String(title)} className="rounded-lg border border-border bg-background p-4"><Icon className="h-5 w-5 text-primary" /><p className="mt-2 font-bold">{title}</p><p className="text-xs text-muted-foreground">{text}</p></div>)}</div>
   </section>
