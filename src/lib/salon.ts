@@ -4,10 +4,11 @@ export type Business = { name: string; address: string; phone: string; displayPh
 export type Service = { name: string; category: string; price: number; description: string };
 export type Product = { name: string; brand: string; price: number };
 export type Offer = { title: string; text: string; cta: string };
+export type Plan = { name: string; price: number; duration: string; description: string; benefits: string[] };
 export type Review = { quote: string; author: string };
 export type Faq = { question: string; answer: string };
 export type Pages = { about: string; summary: string; membership: string };
-export type ContentMap = { business: Business; services: Service[]; products: Product[]; offers: Offer[]; reviews: Review[]; faqs: Faq[]; pages: Pages };
+export type ContentMap = { business: Business; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; reviews: Review[]; faqs: Faq[]; pages: Pages };
 
 export const defaults: ContentMap = {
   business: { name: "Sachin Unisex Salon", address: "Silvassa - 396230, Dadra and Nagar Haveli and Daman and Diu", phone: "+919173414508", displayPhone: "091734 14508", rating: "5.0", reviewCount: 345, hours: "Monday–Sunday · 9:00 AM–10:00 PM" },
@@ -44,6 +45,16 @@ export const defaults: ContentMap = {
     { title: "Complete Hair Ritual", text: "Haircut, wash, nourishing care and styling tailored for your best hair day.", cta: "Enquire now" },
     { title: "Family Salon Day", text: "Easy hair and grooming appointments for parents and children together.", cta: "Plan your visit" },
   ],
+  membershipPlans: [
+    { name: "Silver Care", price: 999, duration: "3 months", description: "A simple plan for regular grooming and essential salon care.", benefits: ["5% off selected services", "One complimentary hair wash", "Priority appointment updates"] },
+    { name: "Gold Glow", price: 1999, duration: "6 months", description: "Extra value for guests who visit regularly for hair and beauty care.", benefits: ["10% off selected services", "Two complimentary hair washes", "One express clean-up", "Priority bookings"] },
+    { name: "Platinum Style", price: 3499, duration: "12 months", description: "Our complete annual membership for frequent salon visits and seasonal care.", benefits: ["15% off selected services", "Four complimentary hair washes", "Two express clean-ups", "Birthday grooming offer"] },
+  ],
+  academyPlans: [
+    { name: "Hair Foundation", price: 7999, duration: "4 weeks", description: "Start with professional hair care and confident salon basics.", benefits: ["Tool handling and hygiene", "Sectioning and basic haircuts", "Blow-dry and finishing", "Client consultation basics"] },
+    { name: "Beauty Professional", price: 12999, duration: "8 weeks", description: "Build practical beauty and make-up skills for client-ready work.", benefits: ["Skin preparation and clean-up", "Facial and beauty fundamentals", "Day and party make-up", "Client care and sanitation"] },
+    { name: "Complete Salon Artist", price: 19999, duration: "12 weeks", description: "A broader course for learners preparing to work across a salon floor.", benefits: ["Hair cutting and styling", "Hair colour foundations", "Beauty and make-up services", "Consultation and salon workflow"] },
+  ],
   reviews: [
     { quote: "Best experience and brilliant staff good service 😊", author: "Google review" },
     { quote: "Nice salon with nice facilities. Personal care is taken by the owner himself.", author: "Google review" },
@@ -76,6 +87,10 @@ export async function loadContent(): Promise<ContentMap> {
 }
 
 export async function saveContent<K extends keyof ContentMap>(key: K, value: ContentMap[K]) {
-  const { error } = await supabase.from("site_content").update({ content: value }).eq("content_key", key);
+  const { data, error } = await supabase.from("site_content").update({ content: value }).eq("content_key", key).select("id");
   if (error) throw error;
+  if (!data?.length) {
+    const { error: insertError } = await supabase.from("site_content").insert({ content_key: key, content: value });
+    if (insertError) throw insertError;
+  }
 }

@@ -8,3 +8,6 @@
 - [ ] Add an Academy page with an original salon training image
 - [ ] Persist updated services and offers in website content
 - [ ] Verify desktop and mobile pages, links, images, and current build status
+- [ ] Build dashboard-editable Membership plan table with direct plan enquiries
+- [ ] Build dashboard-editable Academy course table with prices and teaching notes
+- [ ] Sort uploaded photos between Gallery and homepage offer sliders
