@@ -11,3 +11,8 @@
 - [ ] Build dashboard-editable Membership plan table with direct plan enquiries
 - [ ] Build dashboard-editable Academy course table with prices and teaching notes
 - [ ] Sort uploaded photos between Gallery and homepage offer sliders
+
+## Current request
+- [ ] Add Google map integration for salon location
+- [ ] Add one membership overview image
+- [ ] Add one image to each of the three Academy plans
