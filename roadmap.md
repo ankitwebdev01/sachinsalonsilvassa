@@ -13,6 +13,12 @@
 - [ ] Sort uploaded photos between Gallery and homepage offer sliders
 
 ## Current request
-- [ ] Add Google map integration for salon location
+- [ ] Add the exact Google map location in a customer-friendly contact area
+- [ ] Add the salon email to contact areas and remove the public Owner login link
+- [ ] Create or verify the supplied owner account without storing its password in code
+- [ ] Add a black, yellow, gold, and white public theme with dashboard theme switching
+- [ ] Add inactive Instagram and Facebook icons ready for future links
+- [ ] Add dashboard controls for the website logo/symbol
+- [ ] Eliminate horizontal page overflow on mobile across public pages
 - [ ] Add one membership overview image
 - [ ] Add one image to each of the three Academy plans

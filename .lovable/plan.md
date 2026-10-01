@@ -1,17 +1,23 @@
-# Membership and Academy plan tables
+# Salon contact, location, branding, and mobile improvements
 
-## Current priority
-- Replace the static membership-table image with a responsive comparison table.
-- Give every membership its own WhatsApp enquiry action.
-- Store membership options in editable website content so the dashboard can expand from 3 to 4–6 plans.
-- Add priced Academy course plans with duration, teaching notes, included skills, and direct enquiry actions.
-- Add Academy plans to the same dashboard editing flow.
+## What will change
+- Add the supplied Gmail address to the footer/contact area and remove the public **Owner login** link.
+- Create or verify the supplied salon owner account securely; the password will not be written into website code or content.
+- Add the exact salon location as an embedded Google map in the Salons/contact page, beside the address and booking actions.
+- Change the public website to a black, yellow, gold, and white palette while keeping the current rose palette available as a dashboard-selectable theme.
+- Add Instagram and Facebook icons beside the WhatsApp contact. Until links are supplied, they will be visibly inactive and will not navigate.
+- Add dashboard branding controls so the logo/site symbol can be replaced later using an image URL, while preserving the current logo as the fallback.
+- Audit shared layouts and content pages for mobile overflow, then constrain wide tables, sliders, images, headers, and long text so the site no longer scrolls sideways.
+- Complete the previously requested membership overview image and three Academy plan images, placing them near their related content.
 
-## Later in this request
-- Add salon/customer work photos to Gallery.
-- Use only the uploaded promotional artwork in the homepage offer sliders, not Gallery.
+## Dashboard changes
+- Replace raw editing for business and appearance settings with clear fields where practical.
+- Add a theme selector for **Gold** and **Rose**.
+- Add fields for contact email, Instagram URL, Facebook URL, and logo image URL.
+- Keep Membership and Academy plans editable and expandable up to six options.
 
 ## Technical details
-- Reuse one responsive plan-table component across Membership and Academy.
-- Keep plan data in the existing website-content store and preserve admin-only edits.
-- Seed the new content keys, then verify desktop and mobile layouts and enquiry links.
+- Store public branding, social links, and theme choice in the existing editable site-content system.
+- Apply the chosen theme through semantic color tokens so every public page changes consistently; keep the private dashboard on the current rose palette.
+- Use the connected Google Maps browser key for the exact place view, loaded asynchronously; provide an “Open in Google Maps” fallback link.
+- Validate desktop and phone layouts, map rendering, contact links, authentication, and the latest build status.
