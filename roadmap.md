@@ -13,6 +13,7 @@
 - [ ] Sort uploaded photos between Gallery and homepage offer sliders
 
 ## Current request
+- [ ] Rename the business everywhere to Sachin Family Salon
 - [ ] Add the exact Google map location in a customer-friendly contact area
 - [ ] Add the salon email to contact areas and remove the public Owner login link
 - [ ] Create or verify the supplied owner account without storing its password in code
