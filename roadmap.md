@@ -13,6 +13,10 @@
 - [ ] Sort uploaded photos between Gallery and homepage offer sliders
 
 ## Current request
+- [ ] Use the exact business name “Sachin Family Saloon” everywhere
+- [ ] Alternate black/gold membership and academy plan rows
+- [ ] Place each Academy image inside its matching plan row and require images for new Academy plans
+- [ ] Repair email/password owner access and Google sign-in
 - [ ] Rename the business everywhere to Sachin Family Salon
 - [ ] Add the exact Google map location in a customer-friendly contact area
 - [ ] Add the salon email to contact areas and remove the public Owner login link
