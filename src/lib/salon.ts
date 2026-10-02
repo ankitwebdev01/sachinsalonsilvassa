@@ -1,10 +1,13 @@
 import { supabase } from "@/integrations/supabase/client";
+import hairCourseSrc from "@/assets/academy-hair-foundation.jpg";
+import beautyCourseSrc from "@/assets/academy-beauty-professional.jpg";
+import artistCourseSrc from "@/assets/academy-complete-artist.jpg";
 
 export type Business = { name: string; address: string; phone: string; displayPhone: string; email: string; rating: string; reviewCount: number; hours: string };
 export type Service = { name: string; category: string; price: number; description: string };
 export type Product = { name: string; brand: string; price: number };
 export type Offer = { title: string; text: string; cta: string };
-export type Plan = { name: string; price: number; duration: string; description: string; benefits: string[] };
+export type Plan = { name: string; price: number; duration: string; description: string; benefits: string[]; imageUrl?: string };
 export type Review = { quote: string; author: string };
 export type Faq = { question: string; answer: string };
 export type Pages = { about: string; summary: string; membership: string };
@@ -12,7 +15,7 @@ export type Appearance = { theme: "gold" | "rose"; logoUrl: string; instagramUrl
 export type ContentMap = { business: Business; appearance: Appearance; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; reviews: Review[]; faqs: Faq[]; pages: Pages };
 
 export const defaults: ContentMap = {
-  business: { name: "Sachin Family Salon", address: "City Center, Silvassa - Vapi Rd, opp. Union Bank of India, Amli Industrial Estate, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230", phone: "+919173414508", displayPhone: "091734 14508", email: "sachinsfamilysaloonsilvass@gmail.com", rating: "5.0", reviewCount: 345, hours: "Monday–Sunday · 9:00 AM–10:00 PM" },
+  business: { name: "Sachin Family Saloon", address: "City Center, Silvassa - Vapi Rd, opp. Union Bank of India, Amli Industrial Estate, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230", phone: "+919173414508", displayPhone: "091734 14508", email: "sachinsfamilysaloonsilvass@gmail.com", rating: "5.0", reviewCount: 345, hours: "Monday–Sunday · 9:00 AM–10:00 PM" },
   appearance: { theme: "gold", logoUrl: "", instagramUrl: "", facebookUrl: "" },
   services: [
     { name: "Hair Cut", category: "Women", price: 150, description: "Main women’s haircut styles including U cut, layer cut, step cut and baby cut." },
@@ -53,9 +56,9 @@ export const defaults: ContentMap = {
     { name: "Platinum Style", price: 3499, duration: "12 months", description: "Our complete annual membership for frequent salon visits and seasonal care.", benefits: ["15% off selected services", "Four complimentary hair washes", "Two express clean-ups", "Birthday grooming offer"] },
   ],
   academyPlans: [
-    { name: "Hair Foundation", price: 7999, duration: "4 weeks", description: "Start with professional hair care and confident salon basics.", benefits: ["Tool handling and hygiene", "Sectioning and basic haircuts", "Blow-dry and finishing", "Client consultation basics"] },
-    { name: "Beauty Professional", price: 12999, duration: "8 weeks", description: "Build practical beauty and make-up skills for client-ready work.", benefits: ["Skin preparation and clean-up", "Facial and beauty fundamentals", "Day and party make-up", "Client care and sanitation"] },
-    { name: "Complete Salon Artist", price: 19999, duration: "12 weeks", description: "A broader course for learners preparing to work across a salon floor.", benefits: ["Hair cutting and styling", "Hair colour foundations", "Beauty and make-up services", "Consultation and salon workflow"] },
+    { name: "Hair Foundation", price: 7999, duration: "4 weeks", description: "Start with professional hair care and confident salon basics.", benefits: ["Tool handling and hygiene", "Sectioning and basic haircuts", "Blow-dry and finishing", "Client consultation basics"], imageUrl: hairCourseSrc },
+    { name: "Beauty Professional", price: 12999, duration: "8 weeks", description: "Build practical beauty and make-up skills for client-ready work.", benefits: ["Skin preparation and clean-up", "Facial and beauty fundamentals", "Day and party make-up", "Client care and sanitation"], imageUrl: beautyCourseSrc },
+    { name: "Complete Salon Artist", price: 19999, duration: "12 weeks", description: "A broader course for learners preparing to work across a salon floor.", benefits: ["Hair cutting and styling", "Hair colour foundations", "Beauty and make-up services", "Consultation and salon workflow"], imageUrl: artistCourseSrc },
   ],
   reviews: [
     { quote: "Best experience and brilliant staff good service 😊", author: "Google review" },
@@ -83,7 +86,11 @@ export async function loadContent(): Promise<ContentMap> {
   if (!data) return defaults;
   const output = { ...defaults } as ContentMap;
   for (const row of data) {
-    if (row.content_key in output) Object.assign(output, { [row.content_key]: row.content });
+    if (!(row.content_key in output)) continue;
+    if (row.content_key === "business") output.business = { ...defaults.business, ...(row.content as Partial<Business>), name: "Sachin Family Saloon" };
+    else if (row.content_key === "appearance") output.appearance = { ...defaults.appearance, ...(row.content as Partial<Appearance>) };
+    else if (row.content_key === "academyPlans" && Array.isArray(row.content)) output.academyPlans = row.content.map((plan, index) => ({ ...plan, imageUrl: plan.imageUrl || defaults.academyPlans[index]?.imageUrl || "" }));
+    else Object.assign(output, { [row.content_key]: row.content });
   }
   return output;
 }
