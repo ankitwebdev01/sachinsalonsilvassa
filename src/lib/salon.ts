@@ -86,7 +86,11 @@ export async function loadContent(): Promise<ContentMap> {
   if (!data) return defaults;
   const output = { ...defaults } as ContentMap;
   for (const row of data) {
-    if (row.content_key in output) Object.assign(output, { [row.content_key]: row.content });
+    if (!(row.content_key in output)) continue;
+    if (row.content_key === "business") output.business = { ...defaults.business, ...(row.content as Partial<Business>), name: "Sachin Family Saloon" };
+    else if (row.content_key === "appearance") output.appearance = { ...defaults.appearance, ...(row.content as Partial<Appearance>) };
+    else if (row.content_key === "academyPlans" && Array.isArray(row.content)) output.academyPlans = row.content.map((plan, index) => ({ ...plan, imageUrl: plan.imageUrl || defaults.academyPlans[index]?.imageUrl || "" }));
+    else Object.assign(output, { [row.content_key]: row.content });
   }
   return output;
 }
