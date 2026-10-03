@@ -13,6 +13,8 @@
 - [ ] Sort uploaded photos between Gallery and homepage offer sliders
 
 ## Current request
+- [x] Replace global overflow clipping with genuinely responsive phone layouts
+- [x] Add the exact Google Maps location with a direct Maps fallback
 - [ ] Use the exact business name “Sachin Family Saloon” everywhere
 - [ ] Alternate black/gold membership and academy plan rows
 - [ ] Place each Academy image inside its matching plan row and require images for new Academy plans

@@ -14,7 +14,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const content = useSalonContent();
   const { business, appearance } = content;
   const displayLogo = appearance.logoUrl.trim() || logo.url;
-  return <div data-theme={appearance.theme} className="min-h-screen max-w-full overflow-x-clip bg-background text-foreground">
+  return <div data-theme={appearance.theme} className="min-h-screen min-w-0 bg-background text-foreground">
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto grid h-16 max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6 lg:flex">
         <Link to="/" className="flex min-w-0 items-center gap-3 lg:mr-8">
@@ -32,7 +32,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </div>
       {open && <nav className="border-t border-border bg-background px-4 py-4 lg:hidden">{nav.map(([label, to]) => <Link key={to} to={to} onClick={() => setOpen(false)} className="block border-b border-border py-3 text-sm font-semibold">{label}</Link>)}</nav>}
     </header>
-    <main>{children}</main>
+    <main className="min-w-0">{children}</main>
     <footer className="border-t border-border bg-ink text-ink-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div><span className="mb-4 inline-grid rounded-full bg-background p-2"><img src={displayLogo} alt={`${business.name} logo`} className="h-14 w-14 rounded-full object-contain" onError={(event) => { event.currentTarget.src = logo.url; }} /></span><p className="max-w-xs text-sm text-ink-muted">Professional hair, beauty and grooming care for women, men and families in Silvassa.</p></div>
@@ -41,10 +41,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </div>
       <div className="border-t border-ink-border px-4 py-5 text-center text-xs text-ink-muted">© 2026 {business.name} · Silvassa</div>
     </footer>
-    <a href={whatsappUrl()} target="_blank" rel="noreferrer" aria-label="Chat with Sachin Unisex Salon on WhatsApp" className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-whatsapp-foreground shadow-xl transition-transform hover:scale-105"><MessageCircle className="h-6 w-6" /></a>
+    <a href={whatsappUrl()} target="_blank" rel="noreferrer" aria-label="Chat with Sachin Family Saloon on WhatsApp" className="fixed bottom-4 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-whatsapp-foreground shadow-xl transition-transform hover:scale-105 sm:bottom-5 sm:right-5"><MessageCircle className="h-6 w-6" /></a>
   </div>;
 }
 
 export function SectionTitle({ eyebrow, title, action }: { eyebrow?: string; title: string; action?: ReactNode }) {
-  return <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4"><div className="min-w-0">{eyebrow && <p className="mb-2 text-xs font-bold uppercase text-primary">{eyebrow}</p>}<h2 className="text-2xl font-extrabold sm:text-3xl">{title}</h2></div>{action}</div>;
+  return <div className="mb-7 grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-end gap-3"><div className="min-w-0">{eyebrow && <p className="mb-2 text-xs font-bold uppercase text-primary">{eyebrow}</p>}<h2 className="text-2xl font-extrabold sm:text-3xl">{title}</h2></div><div className="shrink-0">{action}</div></div>;
 }
