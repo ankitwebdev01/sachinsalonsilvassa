@@ -93,8 +93,8 @@ export async function loadContent(): Promise<ContentMap> {
       output.academyPlans = row.content.flatMap((value, index) => {
         if (!value || typeof value !== "object" || Array.isArray(value)) return [];
         const plan = value as Record<string, unknown>;
-        if (typeof plan.name !== "string" || typeof plan.price !== "number" || typeof plan.duration !== "string" || typeof plan.description !== "string" || !Array.isArray(plan.benefits)) return [];
-        return [{ name: plan.name, price: plan.price, duration: plan.duration, description: plan.description, benefits: plan.benefits.filter((benefit): benefit is string => typeof benefit === "string"), imageUrl: typeof plan.imageUrl === "string" && plan.imageUrl ? plan.imageUrl : defaults.academyPlans[index]?.imageUrl ?? "" }];
+        if (typeof plan['name'] !== "string" || typeof plan['price'] !== "number" || typeof plan['duration'] !== "string" || typeof plan['description'] !== "string" || !Array.isArray(plan['benefits'])) return [];
+        return [{ name: plan['name'], price: plan['price'], duration: plan['duration'], description: plan['description'], benefits: plan['benefits'].filter((benefit): benefit is string => typeof benefit === "string"), imageUrl: typeof plan['imageUrl'] === "string" && plan['imageUrl'] ? plan['imageUrl'] : defaults.academyPlans[index]?.imageUrl ?? "" }];
       });
     }
     else Object.assign(output, { [row.content_key]: row.content });
