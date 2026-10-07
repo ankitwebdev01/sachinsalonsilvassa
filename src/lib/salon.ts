@@ -2,17 +2,23 @@ import { supabase } from "@/integrations/supabase/client";
 import hairCourseSrc from "@/assets/academy-hair-foundation.jpg";
 import beautyCourseSrc from "@/assets/academy-beauty-professional.jpg";
 import artistCourseSrc from "@/assets/academy-complete-artist.jpg";
+import galleryFadeSrc from "@/assets/mens-haircut-fade.jpg";
+import galleryStylingSrc from "@/assets/mens-hair-styling.jpg";
+import galleryWomenSrc from "@/assets/womens-hair-styling.jpg";
+import galleryInteriorSrc from "@/assets/salon-interior.avif";
 
 export type Business = { name: string; address: string; phone: string; displayPhone: string; email: string; rating: string; reviewCount: number; hours: string };
 export type Service = { name: string; category: string; price: number; description: string };
 export type Product = { name: string; brand: string; price: number };
 export type Offer = { title: string; text: string; cta: string };
 export type Plan = { name: string; price: number; duration: string; description: string; benefits: string[]; imageUrl?: string };
+export type GalleryItem = { imageUrl: string; caption: string; occasion: string };
+export const galleryOccasions = ["Everyday", "Diwali", "Dussehra", "Navratri", "Teej", "Holi", "Karwa Chauth", "Raksha Bandhan", "Eid", "Christmas", "Bridal"];
 export type Review = { quote: string; author: string };
 export type Faq = { question: string; answer: string };
 export type Pages = { about: string; summary: string; membership: string };
 export type Appearance = { theme: "gold" | "rose"; logoUrl: string; instagramUrl: string; facebookUrl: string };
-export type ContentMap = { business: Business; appearance: Appearance; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; reviews: Review[]; faqs: Faq[]; pages: Pages };
+export type ContentMap = { business: Business; appearance: Appearance; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; gallery: GalleryItem[]; reviews: Review[]; faqs: Faq[]; pages: Pages };
 
 export const defaults: ContentMap = {
   business: { name: "Sachin Family Saloon", address: "City Center, Silvassa - Vapi Rd, opp. Union Bank of India, Amli Industrial Estate, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230", phone: "+919173414508", displayPhone: "091734 14508", email: "sachinsfamilysaloonsilvass@gmail.com", rating: "5.0", reviewCount: 345, hours: "Monday–Sunday · 9:00 AM–10:00 PM" },
@@ -59,6 +65,12 @@ export const defaults: ContentMap = {
     { name: "Hair Foundation", price: 7999, duration: "4 weeks", description: "Start with professional hair care and confident salon basics.", benefits: ["Tool handling and hygiene", "Sectioning and basic haircuts", "Blow-dry and finishing", "Client consultation basics"], imageUrl: hairCourseSrc },
     { name: "Beauty Professional", price: 12999, duration: "8 weeks", description: "Build practical beauty and make-up skills for client-ready work.", benefits: ["Skin preparation and clean-up", "Facial and beauty fundamentals", "Day and party make-up", "Client care and sanitation"], imageUrl: beautyCourseSrc },
     { name: "Complete Salon Artist", price: 19999, duration: "12 weeks", description: "A broader course for learners preparing to work across a salon floor.", benefits: ["Hair cutting and styling", "Hair colour foundations", "Beauty and make-up services", "Consultation and salon workflow"], imageUrl: artistCourseSrc },
+  ],
+  gallery: [
+    { imageUrl: galleryWomenSrc, caption: "Women’s hair styling", occasion: "Everyday" },
+    { imageUrl: galleryFadeSrc, caption: "Men’s fade haircut", occasion: "Everyday" },
+    { imageUrl: galleryStylingSrc, caption: "Men’s haircut preparation", occasion: "Everyday" },
+    { imageUrl: galleryInteriorSrc, caption: "Our Silvassa salon", occasion: "Everyday" },
   ],
   reviews: [
     { quote: "Best experience and brilliant staff good service 😊", author: "Google review" },
