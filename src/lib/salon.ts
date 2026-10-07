@@ -89,7 +89,14 @@ export async function loadContent(): Promise<ContentMap> {
     if (!(row.content_key in output)) continue;
     if (row.content_key === "business") output.business = { ...defaults.business, ...(row.content as Partial<Business>), name: "Sachin Family Saloon" };
     else if (row.content_key === "appearance") output.appearance = { ...defaults.appearance, ...(row.content as Partial<Appearance>) };
-    else if (row.content_key === "academyPlans" && Array.isArray(row.content)) output.academyPlans = row.content.map((plan, index) => ({ ...plan, imageUrl: plan.imageUrl || defaults.academyPlans[index]?.imageUrl || "" }));
+    else if (row.content_key === "academyPlans" && Array.isArray(row.content)) {
+      output.academyPlans = row.content.flatMap((value, index) => {
+        if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+        const plan = value as Record<string, unknown>;
+        if (typeof plan.name !== "string" || typeof plan.price !== "number" || typeof plan.duration !== "string" || typeof plan.description !== "string" || !Array.isArray(plan.benefits)) return [];
+        return [{ name: plan.name, price: plan.price, duration: plan.duration, description: plan.description, benefits: plan.benefits.filter((benefit): benefit is string => typeof benefit === "string"), imageUrl: typeof plan.imageUrl === "string" && plan.imageUrl ? plan.imageUrl : defaults.academyPlans[index]?.imageUrl ?? "" }];
+      });
+    }
     else Object.assign(output, { [row.content_key]: row.content });
   }
   return output;
