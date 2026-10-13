@@ -9,20 +9,22 @@ import galleryInteriorSrc from "@/assets/salon-interior.avif";
 
 export type Business = { name: string; address: string; phone: string; displayPhone: string; email: string; rating: string; reviewCount: number; hours: string };
 export type Service = { name: string; category: string; price: number; description: string };
-export type Product = { name: string; brand: string; price: number };
-export type Offer = { title: string; text: string; cta: string };
+export type Product = { name: string; brand: string; price: number; imageUrl?: string; description?: string; size?: string };
+export type Offer = { title: string; text: string; cta: string; imageUrl?: string; validUntil?: string };
 export type Plan = { name: string; price: number; duration: string; description: string; benefits: string[]; imageUrl?: string };
 export type GalleryItem = { imageUrl: string; caption: string; occasion: string };
 export const galleryOccasions = ["Everyday", "Diwali", "Dussehra", "Navratri", "Teej", "Holi", "Karwa Chauth", "Raksha Bandhan", "Eid", "Christmas", "Bridal"];
 export type Review = { quote: string; author: string };
 export type Faq = { question: string; answer: string };
 export type Pages = { about: string; summary: string; membership: string };
-export type Appearance = { theme: "gold" | "rose"; logoUrl: string; instagramUrl: string; facebookUrl: string };
-export type ContentMap = { business: Business; appearance: Appearance; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; gallery: GalleryItem[]; reviews: Review[]; faqs: Faq[]; pages: Pages };
+export type Appearance = { theme: "gold" | "rose"; logoUrl: string; instagramUrl: string; facebookUrl: string; membershipImageUrl?: string; announcement?: string; showAnnouncement?: boolean };
+export type ContentMap = { business: Business; appearance: Appearance; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; gallery: GalleryItem[]; reviews: Review[]; faqs: Faq[]; pages: Pages; stylists: { name: string; imageUrl: string; specialty: string }[]; messageTemplates: { name: string; text: string }[] };
 
 export const defaults: ContentMap = {
   business: { name: "Sachin Family Saloon", address: "City Center, Silvassa - Vapi Rd, opp. Union Bank of India, Amli Industrial Estate, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230", phone: "+919173414508", displayPhone: "091734 14508", email: "sachinsfamilysaloonsilvass@gmail.com", rating: "5.0", reviewCount: 345, hours: "Monday–Sunday · 9:00 AM–10:00 PM" },
   appearance: { theme: "gold", logoUrl: "", instagramUrl: "", facebookUrl: "" },
+  stylists: [],
+  messageTemplates: [{ name: "Appointment confirmation", text: "Hello! Your appointment at Sachin Family Saloon is confirmed for [date and time]. We look forward to seeing you." }, { name: "Festival greeting", text: "Happy [festival] from Sachin Family Saloon! Message us for our current festive offers." }, { name: "Thank you", text: "Thank you for visiting Sachin Family Saloon! We hope you enjoyed your visit. We would love your feedback on Google." }],
   services: [
     { name: "Hair Cut", category: "Women", price: 150, description: "Main women’s haircut styles including U cut, layer cut, step cut and baby cut." },
     { name: "Hair Spa", category: "Women", price: 500, description: "Hair spa, dandruff care, hair fall care, keratin spa and oil massage with spa." },
