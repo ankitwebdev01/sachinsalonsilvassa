@@ -1,5 +1,15 @@
 # Roadmap
 
+## October 13 dashboard upgrades
+- [ ] Direct photo uploads and shared logo replacement
+- [ ] Editable advertising images, order and expiry dates
+- [ ] Announcement toggle and festive Gallery controls
+- [ ] Customer booking form and owner appointment inbox
+- [ ] Sales date filters, expenses and earnings
+- [ ] Editable stylist showcase and WhatsApp templates
+- [ ] Correct key-free map and owner sign-in return
+- [ ] Verify saved changes, booking inbox and phone layouts
+
 - [ ] Finish dual auto-sliding, dashboard-editable offer windows on the homepage
 - [ ] Ensure the footer logo displays correctly
 - [ ] Add a unique image to every listed product
