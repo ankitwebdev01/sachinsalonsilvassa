@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          created_at: string
+          customer_name: string
+          id: string
+          phone: string
+          preferred_at: string
+          service_name: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          id?: string
+          phone: string
+          preferred_at: string
+          service_name: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          id?: string
+          phone?: string
+          preferred_at?: string
+          service_name?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      expenses: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          expense_date: string
+          id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description: string
+          expense_date?: string
+          id?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          expense_date?: string
+          id?: string
+        }
+        Relationships: []
+      }
       sales: {
         Row: {
           amount: number
@@ -97,7 +151,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      request_salon_appointment: {
+        Args: {
+          contact: string
+          customer: string
+          preferred: string
+          service: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "admin" | "user"
