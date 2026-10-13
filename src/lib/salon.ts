@@ -80,20 +80,20 @@ export const defaults: ContentMap = {
     { quote: "Had a wonderful experience overall with haircut, facial and hair spa.", author: "Google review" },
   ],
   faqs: [
-    { question: "How many types of salons exist?", answer: "Some salons are unisex and cater to both men and women, while others specialise. Sachin Family Salon welcomes everyone in Silvassa." },
+    { question: "How many types of salons exist?", answer: "Some salons are unisex and cater to both men and women, while others specialise. Sachin Family Saloon welcomes everyone in Silvassa." },
     { question: "Can I walk in for a service?", answer: "Walk-ins may be available, but contacting us on WhatsApp before your visit is recommended so we can reserve your preferred time." },
-    { question: "Can I get nail art done at Sachin Family Salon?", answer: "Service availability may change. Please message the salon on WhatsApp before visiting to confirm specialist services." },
-    { question: "How good are the services?", answer: "Customers have rated Sachin Family Salon 5.0 on Google across 345 reviews for attentive service and quality salon care." },
-    { question: "How can I contact Sachin Family Salon in Silvassa?", answer: "Tap any phone number or WhatsApp button on this website to start a personal chat with the salon." },
+    { question: "Can I get nail art done at Sachin Family Saloon?", answer: "Service availability may change. Please message the salon on WhatsApp before visiting to confirm specialist services." },
+    { question: "How good are the services?", answer: "Customers have rated Sachin Family Saloon 5.0 on Google across 345 reviews for attentive service and quality salon care." },
+    { question: "How can I contact Sachin Family Saloon in Silvassa?", answer: "Tap any phone number or WhatsApp button on this website to start a personal chat with the salon." },
   ],
   pages: {
-    about: "Sachin Family Salon is a leading salon in Silvassa, offering thoughtful hair and beauty services for women, men and families. Our team focuses on careful consultation, skilled service and a welcoming experience for every guest.",
-    summary: "Whether you are visiting for a regular haircut, a fresh new style or complete grooming care, Sachin Family Salon brings attentive service and professional finishing together in one convenient Silvassa destination.",
+    about: "Sachin Family Saloon is a leading salon in Silvassa, offering thoughtful hair and beauty services for women, men and families. Our team focuses on careful consultation, skilled service and a welcoming experience for every guest.",
+    summary: "Whether you are visiting for a regular haircut, a fresh new style or complete grooming care, Sachin Family Saloon brings attentive service and professional finishing together in one convenient Silvassa destination.",
     membership: "Enjoy more from every visit with salon privileges, seasonal care offers and personalised service recommendations.",
   },
 };
 
-export const whatsappUrl = (message = "Hello Sachin Family Salon, I would like to book an appointment.") => `https://wa.me/919173414508?text=${encodeURIComponent(message)}`;
+export const whatsappUrl = (message = "Hello Sachin Family Saloon, I would like to book an appointment.") => `https://wa.me/919173414508?text=${encodeURIComponent(message)}`;
 
 export async function loadContent(): Promise<ContentMap> {
   const { data } = await supabase.from("site_content").select("content_key, content");
