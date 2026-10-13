@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Mail, MapPin, Menu, MessageCircle, X } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import logoSrc from "@/assets/sachin-salon-logo.png";
 const logo = { url: logoSrc };
+import { supabase } from "@/integrations/supabase/client";
 import { whatsappUrl } from "@/lib/salon";
 import { useSalonContent } from "@/components/salon/Content";
 
@@ -13,12 +14,16 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const content = useSalonContent();
   const { business, appearance } = content;
+  const [admin, setAdmin] = useState(false);
+  useEffect(() => { supabase.auth.getUser().then(async ({ data: { user } }) => { if (!user) return; const { data } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle(); setAdmin(Boolean(data)); }); }, []);
+  useEffect(() => { const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]'); const old = icon?.href; if (icon && appearance.logoUrl) icon.href = appearance.logoUrl; return () => { if (icon && old) icon.href = old; }; }, [appearance.logoUrl]);
   const displayLogo = appearance.logoUrl.trim() || logo.url;
   return <div data-theme={appearance.theme} className="min-h-screen min-w-0 bg-background text-foreground">
+    {appearance.showAnnouncement && appearance.announcement && <div className="bg-primary px-4 py-3 text-center text-sm font-bold text-primary-foreground break-words">{appearance.announcement}</div>}
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto grid h-16 max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6 lg:flex">
         <Link to="/" className="flex min-w-0 items-center gap-3 lg:mr-8">
-          <img src={displayLogo} alt={`${business.name} logo`} className="h-11 w-11 shrink-0 rounded-full object-cover" onError={(event) => { event.currentTarget.src = logo.url; }} />
+          <img src={displayLogo} alt={`${business.name} logo`} className="h-11 w-11 shrink-0 rounded-full object-contain" onError={(event) => { event.currentTarget.src = logo.url; }} />
           <span className="truncate text-sm font-extrabold uppercase tracking-wide">{business.name}</span>
         </Link>
         <nav className="hidden items-center gap-7 lg:flex">
@@ -32,6 +37,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       </div>
       {open && <nav className="border-t border-border bg-background px-4 py-4 lg:hidden">{nav.map(([label, to]) => <Link key={to} to={to} onClick={() => setOpen(false)} className="block border-b border-border py-3 text-sm font-semibold">{label}</Link>)}</nav>}
     </header>
+    {admin && <div className="border-b border-border bg-secondary px-4 py-2 text-right"><Link to="/dashboard" className="text-sm font-bold text-primary">Admin dashboard →</Link></div>}
     <main className="min-w-0">{children}</main>
     <footer className="border-t border-border bg-ink text-ink-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">

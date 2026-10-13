@@ -9,20 +9,22 @@ import galleryInteriorSrc from "@/assets/salon-interior.avif";
 
 export type Business = { name: string; address: string; phone: string; displayPhone: string; email: string; rating: string; reviewCount: number; hours: string };
 export type Service = { name: string; category: string; price: number; description: string };
-export type Product = { name: string; brand: string; price: number };
-export type Offer = { title: string; text: string; cta: string };
+export type Product = { name: string; brand: string; price: number; imageUrl?: string; description?: string; size?: string };
+export type Offer = { title: string; text: string; cta: string; imageUrl?: string; validUntil?: string };
 export type Plan = { name: string; price: number; duration: string; description: string; benefits: string[]; imageUrl?: string };
 export type GalleryItem = { imageUrl: string; caption: string; occasion: string };
 export const galleryOccasions = ["Everyday", "Diwali", "Dussehra", "Navratri", "Teej", "Holi", "Karwa Chauth", "Raksha Bandhan", "Eid", "Christmas", "Bridal"];
 export type Review = { quote: string; author: string };
 export type Faq = { question: string; answer: string };
 export type Pages = { about: string; summary: string; membership: string };
-export type Appearance = { theme: "gold" | "rose"; logoUrl: string; instagramUrl: string; facebookUrl: string };
-export type ContentMap = { business: Business; appearance: Appearance; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; gallery: GalleryItem[]; reviews: Review[]; faqs: Faq[]; pages: Pages };
+export type Appearance = { theme: "gold" | "rose"; logoUrl: string; instagramUrl: string; facebookUrl: string; membershipImageUrl?: string; announcement?: string; showAnnouncement?: boolean };
+export type ContentMap = { business: Business; appearance: Appearance; services: Service[]; products: Product[]; offers: Offer[]; membershipPlans: Plan[]; academyPlans: Plan[]; gallery: GalleryItem[]; reviews: Review[]; faqs: Faq[]; pages: Pages; stylists: { name: string; imageUrl: string; specialty: string }[]; messageTemplates: { name: string; text: string }[] };
 
 export const defaults: ContentMap = {
   business: { name: "Sachin Family Saloon", address: "City Center, Silvassa - Vapi Rd, opp. Union Bank of India, Amli Industrial Estate, Silvassa, Dadra and Nagar Haveli and Daman and Diu 396230", phone: "+919173414508", displayPhone: "091734 14508", email: "sachinsfamilysaloonsilvass@gmail.com", rating: "5.0", reviewCount: 345, hours: "Monday–Sunday · 9:00 AM–10:00 PM" },
   appearance: { theme: "gold", logoUrl: "", instagramUrl: "", facebookUrl: "" },
+  stylists: [],
+  messageTemplates: [{ name: "Appointment confirmation", text: "Hello! Your appointment at Sachin Family Saloon is confirmed for [date and time]. We look forward to seeing you." }, { name: "Festival greeting", text: "Happy [festival] from Sachin Family Saloon! Message us for our current festive offers." }, { name: "Thank you", text: "Thank you for visiting Sachin Family Saloon! We hope you enjoyed your visit. We would love your feedback on Google." }],
   services: [
     { name: "Hair Cut", category: "Women", price: 150, description: "Main women’s haircut styles including U cut, layer cut, step cut and baby cut." },
     { name: "Hair Spa", category: "Women", price: 500, description: "Hair spa, dandruff care, hair fall care, keratin spa and oil massage with spa." },
@@ -78,20 +80,20 @@ export const defaults: ContentMap = {
     { quote: "Had a wonderful experience overall with haircut, facial and hair spa.", author: "Google review" },
   ],
   faqs: [
-    { question: "How many types of salons exist?", answer: "Some salons are unisex and cater to both men and women, while others specialise. Sachin Family Salon welcomes everyone in Silvassa." },
+    { question: "How many types of salons exist?", answer: "Some salons are unisex and cater to both men and women, while others specialise. Sachin Family Saloon welcomes everyone in Silvassa." },
     { question: "Can I walk in for a service?", answer: "Walk-ins may be available, but contacting us on WhatsApp before your visit is recommended so we can reserve your preferred time." },
-    { question: "Can I get nail art done at Sachin Family Salon?", answer: "Service availability may change. Please message the salon on WhatsApp before visiting to confirm specialist services." },
-    { question: "How good are the services?", answer: "Customers have rated Sachin Family Salon 5.0 on Google across 345 reviews for attentive service and quality salon care." },
-    { question: "How can I contact Sachin Family Salon in Silvassa?", answer: "Tap any phone number or WhatsApp button on this website to start a personal chat with the salon." },
+    { question: "Can I get nail art done at Sachin Family Saloon?", answer: "Service availability may change. Please message the salon on WhatsApp before visiting to confirm specialist services." },
+    { question: "How good are the services?", answer: "Customers have rated Sachin Family Saloon 5.0 on Google across 345 reviews for attentive service and quality salon care." },
+    { question: "How can I contact Sachin Family Saloon in Silvassa?", answer: "Tap any phone number or WhatsApp button on this website to start a personal chat with the salon." },
   ],
   pages: {
-    about: "Sachin Family Salon is a leading salon in Silvassa, offering thoughtful hair and beauty services for women, men and families. Our team focuses on careful consultation, skilled service and a welcoming experience for every guest.",
-    summary: "Whether you are visiting for a regular haircut, a fresh new style or complete grooming care, Sachin Family Salon brings attentive service and professional finishing together in one convenient Silvassa destination.",
+    about: "Sachin Family Saloon is a leading salon in Silvassa, offering thoughtful hair and beauty services for women, men and families. Our team focuses on careful consultation, skilled service and a welcoming experience for every guest.",
+    summary: "Whether you are visiting for a regular haircut, a fresh new style or complete grooming care, Sachin Family Saloon brings attentive service and professional finishing together in one convenient Silvassa destination.",
     membership: "Enjoy more from every visit with salon privileges, seasonal care offers and personalised service recommendations.",
   },
 };
 
-export const whatsappUrl = (message = "Hello Sachin Family Salon, I would like to book an appointment.") => `https://wa.me/919173414508?text=${encodeURIComponent(message)}`;
+export const whatsappUrl = (message = "Hello Sachin Family Saloon, I would like to book an appointment.") => `https://wa.me/919173414508?text=${encodeURIComponent(message)}`;
 
 export async function loadContent(): Promise<ContentMap> {
   const { data } = await supabase.from("site_content").select("content_key, content");
