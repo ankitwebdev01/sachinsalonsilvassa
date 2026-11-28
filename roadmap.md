@@ -39,3 +39,8 @@
 - [ ] Eliminate horizontal page overflow on mobile across public pages
 - [ ] Add one membership overview image
 - [ ] Add one image to each of the three Academy plans
+
+## November 28 login and homepage updates
+- [ ] Keep owner Google/email sessions remembered on the same browser and make signed-in admin access return cleanly
+- [ ] Add the Shop Products showcase immediately after Top Picks, linked to the full product catalogue and enquiries
+- [ ] Include customer profile support in the authentication design, as requested

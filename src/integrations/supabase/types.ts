@@ -68,6 +68,36 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          avatar_url: string
+          created_at: string
+          display_name: string
+          id: string
+          phone: string
+          preferences: Json
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string
+          created_at?: string
+          display_name?: string
+          id: string
+          phone?: string
+          preferences?: Json
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          phone?: string
+          preferences?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sales: {
         Row: {
           amount: number

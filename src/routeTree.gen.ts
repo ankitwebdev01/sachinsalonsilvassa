@@ -19,6 +19,7 @@ import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SalonsRouteImport } from './routes/salons'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiPublicMediaRouteImport } from './routes/api/public/media'
 
@@ -71,6 +72,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/salons': typeof SalonsRoute
   '/services': typeof ServicesRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/public/media': typeof ApiPublicMediaRoute
 }
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/salons': typeof SalonsRoute
   '/services': typeof ServicesRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/public/media': typeof ApiPublicMediaRoute
 }
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/salons': typeof SalonsRoute
   '/services': typeof ServicesRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/public/media': typeof ApiPublicMediaRoute
 }
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/salons'
     | '/services'
+    | '/account'
     | '/dashboard'
     | '/api/public/media'
   fileRoutesByTo: FileRoutesByTo
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/salons'
     | '/services'
+    | '/account'
     | '/dashboard'
     | '/api/public/media'
   id:
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/salons'
     | '/services'
+    | '/_authenticated/account'
     | '/_authenticated/dashboard'
     | '/api/public/media'
   fileRoutesById: FileRoutesById
@@ -252,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -270,10 +289,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
 }
 
